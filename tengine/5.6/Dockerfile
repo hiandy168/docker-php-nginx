@@ -24,19 +24,20 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
     tar xzf tengine-${TENGINE_VERSION}.tar.gz && \
     cd tengine-tengine-${TENGINE_VERSION} && \
     # Modify Tengine version
-    sed -i 's@TENGINE "/" TENGINE_VERSION@"nginx/unknown"@' src/core/nginx.h && \
+    #sed -i 's@TENGINE "/" TENGINE_VERSION@"nginx/unknown"@' src/core/nginx.h && \
     # close debug
     sed -i 's@CFLAGS="$CFLAGS -g"@#CFLAGS="$CFLAGS -g"@' auto/cc/gcc && \
     ./configure \
         --prefix=${TENGINE_INSTALL_DIR} \
         --user=${RUN_USER} --group=${RUN_USER} \
         --with-http_stub_status_module \
-        --with-http_spdy_module \
+        --with-http_v2_module \
         --with-http_ssl_module \
         --with-ipv6 \
         --with-http_gzip_static_module \
         --with-http_realip_module \
         --with-http_flv_module \
+        --with-http_mp4_module \
         --with-http_concat_module=shared \
         --with-http_sysguard_module=shared \
         --with-openssl=/tmp/openssl-${OPENSSL_VERSION} \
@@ -44,7 +45,7 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
         --with-pcre-jit \
         --with-jemalloc && \
     make && make install && \
-    touch ${TENGINE_INSTALL_DIR}/conf/none.conf && \
+    touch ${TENGINE_INSTALL_DIR}/conf/rewrite/none.conf && \
     rm -rf /tmp/*
 
 ADD ${REMOTE_PATH}/conf/nginx.conf ${TENGINE_INSTALL_DIR}/conf/nginx.conf
@@ -52,7 +53,11 @@ ADD ${REMOTE_PATH}/conf/proxy.conf ${TENGINE_INSTALL_DIR}/conf/proxy.conf
 ADD ${REMOTE_PATH}/etc/init.d/nginx /etc/init.d/nginx
 ADD ${REMOTE_PATH}/etc/logrotate.d/nginx /etc/logrotate.d/nginx
 
-RUN chmod +x /etc/init.d/nginx && \
+RUN sed -i "s@worker_connections 51200;@worker_connections 51200;\n    reuse_port on;@" ${TENGINE_INSTALL_DIR}/conf/nginx.conf && \
+    sed -i "s@^worker_processes.*@worker_processes auto;\nworker_cpu_affinity auto;\ndso {\n\tload ngx_http_concat_module.so;\n\tload ngx_http_sysguard_module.so;\n}@" ${TENGINE_INSTALL_DIR}/conf/nginx.conf
+
+RUN sed -i "s@/usr/local/nginx@TENGINE_INSTALL_DIR@g" /etc/init.d/nginx && \
+    chmod +x /etc/init.d/nginx && \
     update-rc.d nginx defaults && \
     ln -s /usr/local/tengine/sbin/nginx /usr/sbin/nginx && \
     ldconfig
