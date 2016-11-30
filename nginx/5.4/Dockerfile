@@ -33,20 +33,19 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
         --prefix=${NGINX_INSTALL_DIR} \
         --user=${RUN_USER} --group=${RUN_USER} \
         --with-http_stub_status_module \
-        --with-http_spdy_module \
+        --with-http_v2_module \
         --with-http_ssl_module \
         --with-ipv6 \
         --with-http_gzip_static_module \
         --with-http_realip_module \
         --with-http_flv_module \
-        --with-http_concat_module=shared \
-        --with-http_sysguard_module=shared \
+        --with-http_mp4_module \
         --with-openssl=/tmp/openssl-${OPENSSL_VERSION} \
         --with-pcre=/tmp/pcre-${PCRE_VERSION} \
         --with-pcre-jit \
-        --with-jemalloc && \
+        --with-ld-opt='-ljemalloc' && \
     make && make install && \
-    touch ${NGINX_INSTALL_DIR}/conf/none.conf && \
+    touch ${NGINX_INSTALL_DIR}/conf/rewrite/none.conf && \
     rm -rf /tmp/*
 
 ADD ${REMOTE_PATH}/conf/nginx.conf ${NGINX_INSTALL_DIR}/conf/nginx.conf
