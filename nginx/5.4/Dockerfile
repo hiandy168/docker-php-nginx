@@ -21,7 +21,7 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
     wget -c --no-check-certificate http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && \
     tar xzf pcre-${PCRE_VERSION}.tar.gz && \
     tar xzf openssl-${OPENSSL_VERSION}.tar.gz && \
-    tar xzf nginx-${NGINX_VERSION}.tar.gz
+    tar xzf nginx-${NGINX_VERSION}.tar.gz && \
     cd nginx-${NGINX_VERSION} && \
     # Modify Nginx version
     #sed -i 's@#define NGINX_VERSION.*$@#define NGINX_VERSION      "1.2"@' src/core/nginx.h
