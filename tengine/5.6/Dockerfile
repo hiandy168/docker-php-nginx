@@ -45,6 +45,7 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
         --with-pcre-jit \
         --with-jemalloc && \
     make && make install && \
+    mkdir -p ${TENGINE_INSTALL_DIR}/conf/rewrite && \
     touch ${TENGINE_INSTALL_DIR}/conf/rewrite/none.conf && \
     rm -rf /tmp/*
 
