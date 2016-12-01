@@ -54,7 +54,7 @@ ADD ${REMOTE_PATH}/conf/proxy.conf ${NGINX_INSTALL_DIR}/conf/proxy.conf
 ADD ${REMOTE_PATH}/etc/init.d/nginx /etc/init.d/nginx
 ADD ${REMOTE_PATH}/etc/logrotate.d/nginx /etc/logrotate.d/nginx
 
-RUN sed -i "s@/usr/local/nginx@NGINX_INSTALL_DIR@g" /etc/init.d/nginx && \
+RUN sed -i "s@/usr/local/nginx@$NGINX_INSTALL_DIR@g" /etc/init.d/nginx && \
     chmod +x /etc/init.d/nginx && \
     update-rc.d nginx defaults && \
     ln -s /usr/local/tengine/sbin/nginx /usr/sbin/nginx && \

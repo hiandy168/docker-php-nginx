@@ -57,7 +57,7 @@ ADD ${REMOTE_PATH}/etc/logrotate.d/nginx /etc/logrotate.d/nginx
 RUN sed -i "s@worker_connections 51200;@worker_connections 51200;\n    reuse_port on;@" ${TENGINE_INSTALL_DIR}/conf/nginx.conf && \
     sed -i "s@^worker_processes.*@worker_processes auto;\nworker_cpu_affinity auto;\ndso {\n\tload ngx_http_concat_module.so;\n\tload ngx_http_sysguard_module.so;\n}@" ${TENGINE_INSTALL_DIR}/conf/nginx.conf
 
-RUN sed -i "s@/usr/local/nginx@TENGINE_INSTALL_DIR@g" /etc/init.d/nginx && \
+RUN sed -i "s@/usr/local/nginx@$TENGINE_INSTALL_DIR@g" /etc/init.d/nginx && \
     chmod +x /etc/init.d/nginx && \
     update-rc.d nginx defaults && \
     ln -s /usr/local/tengine/sbin/nginx /usr/sbin/nginx && \
