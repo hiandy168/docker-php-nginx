@@ -2,7 +2,7 @@ FROM ywfwj2008/php:5.4
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV TENGINE_INSTALL_DIR=/usr/local/tengine \
-    TENGINE_VERSION=2.1.2_f \
+    TENGINE_VERSION=2.2.0 \
     PCRE_VERSION=8.39 \
     OPENSSL_VERSION=1.0.2j \
     RUN_USER=www \
