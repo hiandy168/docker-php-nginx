@@ -10,9 +10,6 @@ ENV TENGINE_INSTALL_DIR=/usr/local/tengine \
     WWWLOGS_DIR=/home/wwwlogs \
     REMOTE_PATH=https://github.com/ywfwj2008/docker-php-nginx/raw/master
 
-RUN apt-get update && apt-get upgrade -yqq && \
-    rm -rf /var/lib/apt/lists/*
-
 WORKDIR /tmp
 
 # install tengine
