@@ -59,6 +59,12 @@ RUN sed -i "s@/usr/local/nginx@$TENGINE_INSTALL_DIR@g" /etc/init.d/nginx && \
     ln -s ${TENGINE_INSTALL_DIR}/sbin/nginx /usr/sbin/nginx && \
     ldconfig
 
+# run install script
+ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
+RUN chmod 777 install.sh && \
+    bash install.sh && \
+    rm -rf /tmp/*
+
 # ending
 WORKDIR ${WWWROOT_DIR}
 RUN mkdir -p ${WWWLOGS_DIR} && \
