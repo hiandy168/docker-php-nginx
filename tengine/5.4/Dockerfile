@@ -27,7 +27,6 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
     ./configure \
         --prefix=${WEBSERVER_INSTALL_DIR} \
         --user=${RUN_USER} --group=${RUN_USER} \
-        --with-http_stub_status_module \
         --with-http_v2_module \
         --with-http_ssl_module \
         --with-ipv6 \
