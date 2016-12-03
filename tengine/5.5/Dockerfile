@@ -1,7 +1,7 @@
 FROM ywfwj2008/php:5.5
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
-ENV TENGINE_INSTALL_DIR=/usr/local/tengine \
+ENV WEBSERVER_INSTALL_DIR=/usr/local/tengine \
     TENGINE_VERSION=2.2.0 \
     PCRE_VERSION=8.39 \
     OPENSSL_VERSION=1.0.2j \
@@ -25,7 +25,7 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
     # close debug
     sed -i 's@CFLAGS="$CFLAGS -g"@#CFLAGS="$CFLAGS -g"@' auto/cc/gcc && \
     ./configure \
-        --prefix=${TENGINE_INSTALL_DIR} \
+        --prefix=${WEBSERVER_INSTALL_DIR} \
         --user=${RUN_USER} --group=${RUN_USER} \
         --with-http_stub_status_module \
         --with-http_v2_module \
@@ -42,21 +42,21 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
         --with-pcre-jit \
         --with-jemalloc && \
     make && make install && \
-    mkdir -p ${TENGINE_INSTALL_DIR}/conf/rewrite && \
-    touch ${TENGINE_INSTALL_DIR}/conf/rewrite/none.conf && \
+    mkdir -p ${WEBSERVER_INSTALL_DIR}/conf/rewrite && \
+    touch ${WEBSERVER_INSTALL_DIR}/conf/rewrite/none.conf && \
     rm -rf /tmp/*
 
-ADD ${REMOTE_PATH}/conf/nginx.conf ${TENGINE_INSTALL_DIR}/conf/nginx.conf
-ADD ${REMOTE_PATH}/conf/proxy.conf ${TENGINE_INSTALL_DIR}/conf/proxy.conf
+ADD ${REMOTE_PATH}/conf/nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
+ADD ${REMOTE_PATH}/conf/proxy.conf ${WEBSERVER_INSTALL_DIR}/conf/proxy.conf
 ADD ${REMOTE_PATH}/etc/init.d/nginx /etc/init.d/nginx
 ADD ${REMOTE_PATH}/etc/logrotate.d/nginx /etc/logrotate.d/nginx
 
-RUN sed -i "s@worker_connections 51200;@worker_connections 51200;\n    reuse_port on;@" ${TENGINE_INSTALL_DIR}/conf/nginx.conf && \
-    sed -i "s@^worker_processes.*@worker_processes auto;\nworker_cpu_affinity auto;\ndso {\n\tload ngx_http_concat_module.so;\n\tload ngx_http_sysguard_module.so;\n}@" ${TENGINE_INSTALL_DIR}/conf/nginx.conf
+RUN sed -i "s@worker_connections 51200;@worker_connections 51200;\n    reuse_port on;@" ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf && \
+    sed -i "s@^worker_processes.*@worker_processes auto;\nworker_cpu_affinity auto;\ndso {\n\tload ngx_http_concat_module.so;\n\tload ngx_http_sysguard_module.so;\n}@" ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
 
-RUN sed -i "s@/usr/local/nginx@$TENGINE_INSTALL_DIR@g" /etc/init.d/nginx && \
+RUN sed -i "s@/usr/local/nginx@$WEBSERVER_INSTALL_DIR@g" /etc/init.d/nginx && \
     chmod +x /etc/init.d/nginx && \
-    ln -s ${TENGINE_INSTALL_DIR}/sbin/nginx /usr/sbin/nginx && \
+    ln -s ${WEBSERVER_INSTALL_DIR}/sbin/nginx /usr/sbin/nginx && \
     ldconfig
 
 # run install script

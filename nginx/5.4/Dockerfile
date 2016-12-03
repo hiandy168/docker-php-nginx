@@ -1,7 +1,7 @@
 FROM ywfwj2008/php:5.4
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
-ENV NGINX_INSTALL_DIR=/usr/local/nginx \
+ENV WEBSERVER_INSTALL_DIR=/usr/local/nginx \
     NGINX_VERSION=1.10.2 \
     PCRE_VERSION=8.39 \
     OPENSSL_VERSION=1.0.2j \
@@ -27,7 +27,7 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
     # close debug
     sed -i 's@CFLAGS="$CFLAGS -g"@#CFLAGS="$CFLAGS -g"@' auto/cc/gcc && \
     ./configure \
-        --prefix=${NGINX_INSTALL_DIR} \
+        --prefix=${WEBSERVER_INSTALL_DIR} \
         --user=${RUN_USER} --group=${RUN_USER} \
         --with-http_stub_status_module \
         --with-http_v2_module \
@@ -42,18 +42,18 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
         --with-pcre-jit \
         --with-ld-opt='-ljemalloc' && \
     make && make install && \
-    mkdir -p ${NGINX_INSTALL_DIR}/conf/rewrite && \
-    touch ${NGINX_INSTALL_DIR}/conf/rewrite/none.conf && \
+    mkdir -p ${WEBSERVER_INSTALL_DIR}/conf/rewrite && \
+    touch ${WEBSERVER_INSTALL_DIR}/conf/rewrite/none.conf && \
     rm -rf /tmp/*
 
-ADD ${REMOTE_PATH}/conf/nginx.conf ${NGINX_INSTALL_DIR}/conf/nginx.conf
-ADD ${REMOTE_PATH}/conf/proxy.conf ${NGINX_INSTALL_DIR}/conf/proxy.conf
+ADD ${REMOTE_PATH}/conf/nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
+ADD ${REMOTE_PATH}/conf/proxy.conf ${WEBSERVER_INSTALL_DIR}/conf/proxy.conf
 ADD ${REMOTE_PATH}/etc/init.d/nginx /etc/init.d/nginx
 ADD ${REMOTE_PATH}/etc/logrotate.d/nginx /etc/logrotate.d/nginx
 
-RUN sed -i "s@/usr/local/nginx@$NGINX_INSTALL_DIR@g" /etc/init.d/nginx && \
+RUN sed -i "s@/usr/local/nginx@$WEBSERVER_INSTALL_DIR@g" /etc/init.d/nginx && \
     chmod +x /etc/init.d/nginx && \
-    ln -s ${NGINX_INSTALL_DIR}/sbin/nginx /usr/sbin/nginx && \
+    ln -s ${WEBSERVER_INSTALL_DIR}/sbin/nginx /usr/sbin/nginx && \
     ldconfig
 
 # run install script
