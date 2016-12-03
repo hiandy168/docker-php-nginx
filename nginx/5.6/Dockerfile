@@ -51,11 +51,6 @@ ADD ${REMOTE_PATH}/conf/proxy.conf ${WEBSERVER_INSTALL_DIR}/conf/proxy.conf
 ADD ${REMOTE_PATH}/etc/init.d/nginx /etc/init.d/nginx
 ADD ${REMOTE_PATH}/etc/logrotate.d/nginx /etc/logrotate.d/nginx
 
-RUN sed -i "s@/usr/local/nginx@$WEBSERVER_INSTALL_DIR@g" /etc/init.d/nginx && \
-    chmod +x /etc/init.d/nginx && \
-    ln -s ${WEBSERVER_INSTALL_DIR}/sbin/nginx /usr/sbin/nginx && \
-    ldconfig
-
 # run install script
 ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
 RUN chmod 777 install.sh && \
