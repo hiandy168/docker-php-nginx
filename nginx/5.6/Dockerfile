@@ -53,7 +53,6 @@ ADD ${REMOTE_PATH}/etc/logrotate.d/nginx /etc/logrotate.d/nginx
 
 RUN sed -i "s@/usr/local/nginx@$NGINX_INSTALL_DIR@g" /etc/init.d/nginx && \
     chmod +x /etc/init.d/nginx && \
-    update-rc.d nginx defaults && \
     ln -s ${NGINX_INSTALL_DIR}/sbin/nginx /usr/sbin/nginx && \
     ldconfig
 
