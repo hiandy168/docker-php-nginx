@@ -25,6 +25,10 @@ proxy_set_header X-Real-IP \$remote_addr;
 proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
 EOF
 
+sed -i "s@/home/wwwroot/default@$WWWROOT_DIR/default@" $WEBSERVER_INSTALL_DIR/conf/nginx.conf
+sed -i "s@/home/wwwlogs@$WWWLOGS_DIR@g" $WEBSERVER_INSTALL_DIR/conf/nginx.conf
+sed -i "s@^user www www@user $RUN_USER $RUN_USER@" $WEBSERVER_INSTALL_DIR/conf/nginx.conf
+
 # logrotate nginx log
 cat > /etc/logrotate.d/nginx << EOF
 $WWWLOGS_DIR/*nginx.log {
