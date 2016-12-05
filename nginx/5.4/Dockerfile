@@ -46,7 +46,7 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
     touch ${WEBSERVER_INSTALL_DIR}/conf/rewrite/none.conf && \
     rm -rf /tmp/*
 
-ADD ${REMOTE_PATH}/conf/nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
+ADD ${REMOTE_PATH}/nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
 ADD ${REMOTE_PATH}/etc/init.d/nginx /etc/init.d/nginx
 
 # run install script
