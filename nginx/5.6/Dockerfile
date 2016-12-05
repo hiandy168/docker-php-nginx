@@ -47,7 +47,7 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
     rm -rf /tmp/*
 
 ADD ${REMOTE_PATH}/nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
-ADD ${REMOTE_PATH}/etc/init.d/nginx /etc/init.d/nginx
+ADD ${REMOTE_PATH}/nginx-init /etc/init.d/nginx
 
 # run install script
 ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
