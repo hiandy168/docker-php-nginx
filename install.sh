@@ -44,3 +44,7 @@ $WWWLOGS_DIR/*nginx.log {
   endscript
 }
 EOF
+
+mkdir -p ${WWWROOT_DIR}/default
+echo "Hello World!" > /${WWWROOT_DIR}/default/index.html
+echo "<?php phpinfo();" > /${WWWROOT_DIR}/default/phpinfo.php

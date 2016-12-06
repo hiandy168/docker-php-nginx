@@ -58,10 +58,6 @@ RUN chmod 777 install.sh && \
 
 # ending
 WORKDIR ${WWWROOT_DIR}
-RUN mkdir -p ${WWWLOGS_DIR} && \
-    mkdir -p ${WWWROOT_DIR}/default && \
-    echo "Hello World!" > /${WWWROOT_DIR}/default/index.html && \
-    echo "<?php phpinfo();" > /${WWWROOT_DIR}/default/phpinfo.php
 
 # expose port
 EXPOSE 80 443
