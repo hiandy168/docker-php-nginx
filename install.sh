@@ -3,6 +3,11 @@
 [ -z "`grep ^'export PATH=' /etc/profile`" ] && echo "export PATH=$WEBSERVER_INSTALL_DIR/sbin:\$PATH" >> /etc/profile
 [ -n "`grep ^'export PATH=' /etc/profile`" -a -z "`grep $WEBSERVER_INSTALL_DIR /etc/profile`" ] && sed -i "s@^export PATH=\(.*\)@export PATH=$WEBSERVER_INSTALL_DIR/sbin:\1@" /etc/profile
 
+wget -c --no-check-certificate ${REMOTE_PATH}/nginx-init -O /etc/init.d/nginx
+wget -c --no-check-certificate ${REMOTE_PATH}/nginx.conf -O ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
+wget -c --no-check-certificate ${REMOTE_PATH}/rewrite.tar.gz -P ${WEBSERVER_INSTALL_DIR}/conf/
+tar -zxvf ${WEBSERVER_INSTALL_DIR}/conf/rewrite.tar.gz && unlink ${WEBSERVER_INSTALL_DIR}/conf/rewrite.tar.gz
+
 sed -i "s@/usr/local/nginx@$WEBSERVER_INSTALL_DIR@g" /etc/init.d/nginx
 chmod +x /etc/init.d/nginx
 ldconfig

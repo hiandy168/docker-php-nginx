@@ -42,13 +42,7 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
         --with-pcre-jit \
         --with-ld-opt='-ljemalloc' && \
     make && make install && \
-    mkdir -p ${WEBSERVER_INSTALL_DIR}/conf/rewrite && \
-    touch ${WEBSERVER_INSTALL_DIR}/conf/rewrite/none.conf && \
     rm -rf /tmp/*
-
-ADD ${REMOTE_PATH}/nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
-ADD ${REMOTE_PATH}/nginx-init /etc/init.d/nginx
-ADD ${REMOTE_PATH}/rewrite.tar.gz ${WEBSERVER_INSTALL_DIR}/conf/
 
 # run install script
 ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
