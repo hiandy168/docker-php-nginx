@@ -19,9 +19,10 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
     tar xzf pcre-${PCRE_VERSION}.tar.gz && \
     tar xzf openssl-${OPENSSL_VERSION}.tar.gz && \
     tar xzf tengine-${TENGINE_VERSION}.tar.gz && \
-    cd tengine-tengine-${TENGINE_VERSION} && \
+    #cd tengine-tengine-${TENGINE_VERSION} && \
+    cd tengine-master && \
     # Modify Tengine version
-    #sed -i 's@TENGINE "/" TENGINE_VERSION@"nginx/unknown"@' src/core/nginx.h && \
+    sed -i 's@TENGINE "/" TENGINE_VERSION@"nginx/unknown"@' src/core/nginx.h && \
     # close debug
     sed -i 's@CFLAGS="$CFLAGS -g"@#CFLAGS="$CFLAGS -g"@' auto/cc/gcc && \
     ./configure \
