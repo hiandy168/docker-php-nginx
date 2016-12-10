@@ -15,7 +15,7 @@ WORKDIR /tmp
 # install tengine
 RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${PCRE_VERSION}.tar.gz && \
     wget -c --no-check-certificate https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz && \
-    wget -c --no-check-certificate https://github.com/alibaba/tengine/archive/tengine-${TENGINE_VERSION}.tar.gz && \
+    wget -c --no-check-certificate https://github.com/alibaba/tengine/archive/master.tar.gz -O tengine-${TENGINE_VERSION}.tar.gz && \
     tar xzf pcre-${PCRE_VERSION}.tar.gz && \
     tar xzf openssl-${OPENSSL_VERSION}.tar.gz && \
     tar xzf tengine-${TENGINE_VERSION}.tar.gz && \
