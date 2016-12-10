@@ -52,5 +52,5 @@ $WWWLOGS_DIR/*nginx.log {
 EOF
 
 mkdir -p ${WWWROOT_DIR}/default
-echo "Hello World!" > /${WWWROOT_DIR}/default/index.html
+echo "Hello World! IT's running with PHP ${PHP_VERSION}!" > /${WWWROOT_DIR}/default/index.html
 echo "<?php phpinfo();" > /${WWWROOT_DIR}/default/phpinfo.php
