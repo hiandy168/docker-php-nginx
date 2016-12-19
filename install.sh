@@ -7,6 +7,7 @@ wget -c --no-check-certificate ${REMOTE_PATH}/nginx-init && mv -f nginx-init /et
 wget -c --no-check-certificate ${REMOTE_PATH}/nginx.conf && mv -f nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
 wget -c --no-check-certificate ${REMOTE_PATH}/rewrite.tar.gz && tar -zxvf rewrite.tar.gz
 mv -f rewrite ${WEBSERVER_INSTALL_DIR}/conf/ && unlink rewrite.tar.gz
+mkdir -p ${WEBSERVER_INSTALL_DIR}/conf/vhost
 chown -R root:staff ${WEBSERVER_INSTALL_DIR}/conf/
 
 sed -i "s@/usr/local/nginx@$WEBSERVER_INSTALL_DIR@g" /etc/init.d/nginx
