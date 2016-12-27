@@ -30,7 +30,6 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
         --user=${RUN_USER} --group=${RUN_USER} \
         --with-http_v2_module \
         --with-http_ssl_module \
-        --with-ipv6 \
         --with-http_gzip_static_module \
         --with-http_realip_module \
         --with-http_flv_module \
