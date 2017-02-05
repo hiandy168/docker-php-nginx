@@ -2,7 +2,7 @@ FROM ywfwj2008/php:5.6
 MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 
 ENV WEBSERVER_INSTALL_DIR=/usr/local/nginx \
-    NGINX_VERSION=1.10.2 \
+    NGINX_VERSION=1.10.3 \
     PCRE_VERSION=8.39 \
     OPENSSL_VERSION=1.0.2j \
     RUN_USER=www \
