@@ -4,7 +4,7 @@ MAINTAINER ywfwj2008 <ywfwj2008@163.com>
 ENV WEBSERVER_INSTALL_DIR=/usr/local/nginx \
     NGINX_VERSION=1.10.3 \
     PCRE_VERSION=8.39 \
-    OPENSSL_VERSION=1.0.2j \
+    OPENSSL_VERSION=1.0.2k \
     RUN_USER=www \
     WWWROOT_DIR=/home/wwwroot \
     WWWLOGS_DIR=/home/wwwlogs \
