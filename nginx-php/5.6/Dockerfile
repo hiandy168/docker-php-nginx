@@ -12,6 +12,14 @@ ENV WEBSERVER_INSTALL_DIR=/usr/local/nginx \
 
 WORKDIR /tmp
 
+RUN apt-get update && \
+    apt-get install -y wget libmemcached-dev zlib1g-dev
+
+RUN pecl install memcached-2.2.0 && \
+    pecl install redis-3.1.0 && \
+    pecl install xdebug-2.5.0 && \
+    docker-php-ext-enable memcached redis xdebug
+
 # install tengine
 RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${PCRE_VERSION}.tar.gz && \
     wget -c --no-check-certificate https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz && \
@@ -38,16 +46,14 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
         --with-http_mp4_module \
         --with-openssl=/tmp/openssl-${OPENSSL_VERSION} \
         --with-pcre=/tmp/pcre-${PCRE_VERSION} \
-        --with-pcre-jit \
-        --with-ld-opt='-ljemalloc' && \
+        --with-pcre-jit && \
     make && make install && \
     rm -rf /tmp/*
 
 # run install script
-ADD ${REMOTE_PATH}/install.sh /tmp/install.sh
-RUN chmod 777 install.sh && \
-    bash install.sh && \
-    rm -rf /tmp/*
+RUN wget wget -c --no-check-certificate ${REMOTE_PATH}/nginx.conf && \
+    mv -f nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
+
 
 # ending
 WORKDIR ${WWWROOT_DIR}
