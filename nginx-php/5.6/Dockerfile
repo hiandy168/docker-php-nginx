@@ -54,7 +54,6 @@ RUN wget -c --no-check-certificate ftp://ftp.csx.cam.ac.uk/pub/software/programm
 RUN wget wget -c --no-check-certificate ${REMOTE_PATH}/nginx.conf && \
     mv -f nginx.conf ${WEBSERVER_INSTALL_DIR}/conf/nginx.conf
 
-
 # ending
 WORKDIR ${WWWROOT_DIR}
 
